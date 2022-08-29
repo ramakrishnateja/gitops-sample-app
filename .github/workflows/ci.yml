@@ -33,4 +33,7 @@ jobs:
     name: Docker Build, Scan, Push
     needs: build
     uses: ./docker-build.yml
+    with:
+      Docker_Organization_Name: 'docker.io/ramakrishnateja'
+      Application_Name: 'gitops-app-sample'
     
