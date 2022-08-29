@@ -1,0 +1,63 @@
+name: PreBuild
+
+on:
+  workflow_call:
+    inputs:
+      TestInput:
+        description: "A test input"
+        type: "string"
+
+jobs:
+  pre-build:
+    name: PreBuild
+    permissions:
+      contents: read
+      security-events: write
+    runs-on: "Ubuntu-18.04"
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Static Code Analysis - Sonarqube
+        run: |
+          echo "Hello SonarQube scanning"
+      
+      - name: Vulnerability Scanning - Veracode
+        run: |
+          echo "Hello Veracode scanning"
+
+      # TODO - Add trivy scan for file system.
+      - name: Secret Scan
+        run: |
+          echo "Hello Secret Security scanning"
+          echo "Using Trivy to scan the filesystem to ensure passwords, tokens, certificates, etc are not present."
+
+      # TODO - Add as a pre check or separate action.
+      # Preferrably this only runs when the specific file/directory changes.
+      # Can use trivy to accomplish this.
+      - name: Dockerfile Scan
+        run: |
+          echo "Hello Dockerfile security scanning!"
+          echo "Using Trivy to scan Dockerfile"
+
+      - name: K8 Object Scan
+        run: |
+          echo "Hello K8s object (manifest or helm) security scanning!"
+
+      - name: SBOM Scan / Report
+        run: |
+          echo "Hello Trivy SBOM Scan"
+
+      # Run Trivy in GitHub SBOM mode and submit results to Dependency Snapshots
+      #- name: SBOM Scan / Report
+      #  uses: aquasecurity/trivy-action@master
+        # Pull PAT token from Github actions secrets.
+      #  env:
+      #    myPAT: ${{ secrets.GH_SEC_PAT }}
+      #  with:
+      #    scan-type: 'fs'
+      #    format: 'github'
+      #    output: 'dependency-results.sbom.json'
+      #    image-ref: '.'
+      #    github-pat: ${{ env.myPAT }}
+        

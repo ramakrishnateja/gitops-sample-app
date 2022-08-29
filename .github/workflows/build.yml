@@ -1,0 +1,23 @@
+name: Build
+
+on:
+  workflow_call: {}
+
+jobs:
+  build:
+    name: Build
+    permissions:
+      contents: read
+      security-events: write
+    runs-on: "Ubuntu-18.04"
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Unit test
+        run: |
+          echo "Hello Unit Testing!"
+
+      - name: Code coverage
+        run: |
+          echo "Hello Code coverage"

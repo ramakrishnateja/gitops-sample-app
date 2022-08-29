@@ -25,3 +25,5 @@ pool: Gitops-Build-Agents
 stages:
   - stage: prebuild
     displayName: 'Pre Build'
+    jobs:
+      - job: 

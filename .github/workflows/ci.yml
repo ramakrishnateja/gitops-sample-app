@@ -1,0 +1,36 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+permissions:
+  contents: read
+  security-events: write
+
+jobs:
+  pre-build:
+    name: PreBuild
+    uses: ./prebuild.yml
+    permissions:
+      contents: read
+      security-events: write
+
+  build:
+    permissions:
+      contents: read
+      security-events: write
+    name: Build
+    needs: pre-build
+    uses: ./build.yml
+
+  docker-build:
+    permissions:
+      contents: read
+      security-events: write
+    name: Docker Build, Scan, Push
+    needs: build
+    uses: ./docker-build.yml
+    
