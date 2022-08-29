@@ -13,7 +13,7 @@ permissions:
 jobs:
   pre-build:
     name: PreBuild
-    uses: ./.github/workflows/prebuild.yml@main
+    uses: ./.github/workflows/prebuild.yml
     permissions:
       contents: read
       security-events: write
@@ -24,7 +24,7 @@ jobs:
       security-events: write
     name: Build
     needs: pre-build
-    uses: ./.github/workflows/build.yml@main
+    uses: ./.github/workflows/build.yml
 
   docker-build:
     permissions:
@@ -32,7 +32,7 @@ jobs:
       security-events: write
     name: Docker Build, Scan, Push
     needs: build
-    uses: ./.github/workflows/docker-build.yml@main
+    uses: ./.github/workflows/docker-build.yml
     with:
       Docker_Organization_Name: 'docker.io/ramakrishnateja'
       Application_Name: 'gitops-app-sample'
