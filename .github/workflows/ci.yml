@@ -36,4 +36,24 @@ jobs:
     with:
       Docker_Organization_Name: 'docker.io/ramakrishnateja'
       Application_Name: 'gitops-app-sample'
+
+  gitops-dev:
+    permissions:
+      contents: read
+      security-events: write
+    name: Update Dev
+    needs: docker-build
+    uses: ./.github/workflows/gitops.yml
+    with:
+      git-username: ${{ secrets.GITOPS_GIT_USERNAME }}
+      git-user-email: ${{ secrets.GITOPS_GIT_USER_EMAIL }}
+      git-user-pat: ${{ secrets.GITOPS_GIT_USER_PAT }}
+      config-repository-github-url: "github.com"
+      config-repository-github-org: "ramakrishnateja"
+      config-repository-name: "gitops-sample-app-config"
+      environment: "dev"
+      kustomize-image-name: "gitops-sample-app"
+      docker-image: docker.io/ramakrishnateja/gitops-sample-app
+
+      
     

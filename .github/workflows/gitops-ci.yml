@@ -1,6 +1,0 @@
-name: GitOps-CI
-
-on:
-  workflow_call:
-    inputs:
-      
