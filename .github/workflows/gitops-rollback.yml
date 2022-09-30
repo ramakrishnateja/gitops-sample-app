@@ -15,10 +15,6 @@ on:
         description: "The name of the config repository"
         type: "string"
         required: true
-      environment:
-        description: "The name of the environment"
-        type: "string"
-        required: true
       kustomize-image-name:
         description: "Image name in kustomize file to be updated"
         type: "string"

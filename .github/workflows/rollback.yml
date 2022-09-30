@@ -1,0 +1,41 @@
+name: Rollback
+
+on:
+  workflow_dispatch:
+    inputs:
+      manifests-revision-to-revert:
+        description: 'Manifests git revision to revert'
+        required: true
+        type: string
+      revert-app-config:
+        description: 'Whether app config also need to be reverted'
+        required: true
+        type: boolean
+        default: false
+      app-config-revision-to-revert:
+        description: 'Appconfig git revision to revert'
+        required: false
+        type: string
+
+permissions:
+  contents: read
+  security-events: write
+
+jobs:
+  rollback:
+    permissions:
+      contents: read
+      security-events: write
+    name: Rollback Dev
+    needs: gitops-dev
+    uses: ./.github/workflows/gitops-rollback.yml
+    with:
+      config-repository-github-url: "github.com"
+      config-repository-github-org: "ramakrishnateja"
+      config-repository-name: "gitops-sample-app-config"
+      kustomize-image-name: "gitops-sample-app"
+      docker-image: docker.io/ramakrishnateja/gitops-sample-app
+    secrets:
+      git-username: ${{ secrets.GITOPS_GIT_USERNAME }}
+      git-user-email: ${{ secrets.GITOPS_GIT_USER_EMAIL }}
+      git-user-pat: ${{ secrets.GITOPS_GIT_USER_PAT }}  
