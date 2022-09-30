@@ -3,18 +3,6 @@ name: GitOps-CI
 on:
   workflow_call:
     inputs:
-      git-username:
-        description: "Username of the git user to use"
-        type: "string"
-        required: true
-      git-user-email:
-        description: "Email address of the git user to use for gitops"
-        type: "string"
-        required: true
-      git-user-pat:
-        description: "personal access token of the gitops user"
-        type: "string"
-        required: true
       config-repository-github-url:
         description: "The github url of the config repository"
         type: "string"
@@ -39,6 +27,16 @@ on:
         description: "docker image name"
         type: "string"
         required: true
+    secrets:
+      git-username:
+        description: "Username of the git user to use"
+        required: true
+      git-user-email:
+        description: "Email address of the git user to use for gitops"
+        required: true
+      git-user-pat:
+        description: "personal access token of the gitops user"
+        required: true
 
 
 jobs:
@@ -51,9 +49,9 @@ jobs:
     steps:
       - name: Checkout code
         run: |
-          git config --global user.email "${{ inputs.git-user-email }}"
-          git config --global user.name "${{ inputs.git-username }}"
-          git clone https://${{ inputs.git-username }}:${{ inputs.git-user-pat }}/${{ inputs.config-repository-github-url }}/${{ inputs.config-repository-github-org }}/${{ inputs.config-repository-name }}.git
+          git config --global user.email "${{ secrets.git-user-email }}"
+          git config --global user.name "${{ secrets.git-username }}"
+          git clone https://${{ secrets.git-username }}:${{ secrets.git-user-pat }}/${{ inputs.config-repository-github-url }}/${{ inputs.config-repository-github-org }}/${{ inputs.config-repository-name }}.git
           cd ${{ inputs.config-repository-name }}/${{ inputs.environment }}
           kustomize edit set image ${{ inputs.kustomize-image-name }}=${{ inputs.docker-image }}:${{ github.sha }}
           git add .
