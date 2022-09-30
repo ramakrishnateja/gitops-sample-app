@@ -54,6 +54,7 @@ jobs:
       environment: "dev"
       kustomize-image-name: "gitops-sample-app"
       docker-image: docker.io/ramakrishnateja/gitops-sample-app
+    secrets: inherit
 
       
     
