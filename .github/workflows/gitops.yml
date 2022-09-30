@@ -51,7 +51,7 @@ jobs:
         run: |
           git config --global user.email "${{ secrets.git-user-email }}"
           git config --global user.name "${{ secrets.git-username }}"
-          git clone https://${{ secrets.git-username }}:${{ secrets.git-user-pat }}/${{ inputs.config-repository-github-url }}/${{ inputs.config-repository-github-org }}/${{ inputs.config-repository-name }}.git
+          git clone https://${{ secrets.git-username }}:${{ secrets.git-user-pat }}@${{ inputs.config-repository-github-url }}/${{ inputs.config-repository-github-org }}/${{ inputs.config-repository-name }}.git
           cd ${{ inputs.config-repository-name }}/${{ inputs.environment }}
           kustomize edit set image ${{ inputs.kustomize-image-name }}=${{ inputs.docker-image }}:${{ github.sha }}
           git add .
