@@ -57,5 +57,6 @@ jobs:
           kustomize edit set image ${{ inputs.kustomize-image-name }}=${{ inputs.docker-image }}:${{ github.sha }}
           git add .
           git commit -m "Gitops Image change for ${{ inputs.environment }} with ${{ inputs.docker-image }}:${{ github.sha }}"
+          git pull --rebase https://${{ secrets.git-username }}:${{ secrets.git-user-pat }}@${{ inputs.config-repository-github-url }}/${{ inputs.config-repository-github-org }}/${{ inputs.config-repository-name }}.git master
           git push -u origin +master
       
