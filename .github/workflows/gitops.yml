@@ -41,14 +41,14 @@ on:
 
 jobs:
   promote-dev:
-    name: PromoteDev
+    name: UpdateImage
     permissions:
       contents: read
       security-events: write
     runs-on: "ubuntu-latest"
     environment: ${{ inputs.environment }}
     steps:
-      - name: Update Dev Image
+      - name: Update Image
         run: |
           git config --global user.email "${{ secrets.git-user-email }}"
           git config --global user.name "${{ secrets.git-username }}"
