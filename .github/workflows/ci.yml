@@ -57,5 +57,24 @@ jobs:
       git-user-email: ${{ secrets.GITOPS_GIT_USER_EMAIL }}
       git-user-pat: ${{ secrets.GITOPS_GIT_USER_PAT }}
 
+  gitops-qa:
+    permissions:
+      contents: read
+      security-events: write
+    name: Update QA
+    needs: gitops-dev
+    uses: ./.github/workflows/gitops.yml
+    with:
+      config-repository-github-url: "github.com"
+      config-repository-github-org: "ramakrishnateja"
+      config-repository-name: "gitops-sample-app-config"
+      environment: "qa"
+      kustomize-image-name: "gitops-sample-app"
+      docker-image: docker.io/ramakrishnateja/gitops-sample-app
+    secrets:
+      git-username: ${{ secrets.GITOPS_GIT_USERNAME }}
+      git-user-email: ${{ secrets.GITOPS_GIT_USER_EMAIL }}
+      git-user-pat: ${{ secrets.GITOPS_GIT_USER_PAT }}
+
       
     
