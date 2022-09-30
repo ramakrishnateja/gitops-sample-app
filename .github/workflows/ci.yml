@@ -68,7 +68,6 @@ jobs:
       config-repository-github-url: "github.com"
       config-repository-github-org: "ramakrishnateja"
       config-repository-name: "gitops-sample-app-config"
-      environment: "dev"
       kustomize-image-name: "gitops-sample-app"
       docker-image: docker.io/ramakrishnateja/gitops-sample-app
     secrets:
