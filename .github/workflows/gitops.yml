@@ -40,7 +40,7 @@ on:
 
 
 jobs:
-  promote-dev:
+  promote:
     name: UpdateImage
     permissions:
       contents: read
@@ -59,4 +59,17 @@ jobs:
           git commit -m "Gitops Image change for ${{ inputs.environment }} with ${{ inputs.docker-image }}:${{ github.sha }}"
           git pull --rebase https://${{ secrets.git-username }}:${{ secrets.git-user-pat }}@${{ inputs.config-repository-github-url }}/${{ inputs.config-repository-github-org }}/${{ inputs.config-repository-name }}.git master
           git push -u origin +master
+
+  rollback:
+    name: Rollback
+    permissions:
+      contents: read
+      security-events: write
+    runs-on: "ubuntu-latest"
+    environment: ${{ inputs.environment }}
+    needs: promote
+    steps:
+      - name: Rollback Image
+        run: |
+          echo "rollingback the changes"
       
