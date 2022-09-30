@@ -1,0 +1,52 @@
+name: GitOps-Rollback
+
+on:
+  workflow_call:
+    inputs:
+      config-repository-github-url:
+        description: "The github url of the config repository"
+        type: "string"
+        required: true
+      config-repository-github-org:
+        description: "The github organization name of the config repository"
+        type: "string"
+        required: true
+      config-repository-name:
+        description: "The name of the config repository"
+        type: "string"
+        required: true
+      environment:
+        description: "The name of the environment"
+        type: "string"
+        required: true
+      kustomize-image-name:
+        description: "Image name in kustomize file to be updated"
+        type: "string"
+        required: true
+      docker-image:
+        description: "docker image name"
+        type: "string"
+        required: true
+    secrets:
+      git-username:
+        description: "Username of the git user to use"
+        required: true
+      git-user-email:
+        description: "Email address of the git user to use for gitops"
+        required: true
+      git-user-pat:
+        description: "personal access token of the gitops user"
+        required: true
+
+jobs:
+  rollback:
+    name: Rollback
+    permissions:
+      contents: read
+      security-events: write
+    runs-on: "ubuntu-latest"
+    environment: ${{ inputs.environment }}
+    steps:
+      - name: Rollback Image
+        run: |
+          echo "rollingback the changes"
