@@ -82,7 +82,7 @@ jobs:
       security-events: write
     name: Update QA
     needs: gitops-dev
-    uses: ./.github/workflows/gitops.yml
+    uses: ./.github/workflows/gitops-promote.yml
     with:
       config-repository-github-url: "github.com"
       config-repository-github-org: "ramakrishnateja"
