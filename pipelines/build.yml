@@ -1,8 +1,14 @@
-steps:
-  - step: |
-      echo "Unit testing"
-    displayName: "Unit Testing"
+stages:
+- stage: Build
+  dependsOn: PreBuild
+  displayName: Build
+  jobs:
+  - job: Build
+    steps:
+      - step: |
+          echo "Unit testing"
+        displayName: "Unit Testing"
 
-  - step: |
-      echo "Code Coverage"
-    displayName: "Code Coverage"
+      - step: |
+          echo "Code Coverage"
+        displayName: "Code Coverage"

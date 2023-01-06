@@ -1,24 +1,29 @@
-steps:
-- script: |
-      echo "Need to run sonarqube scan"
-  displayName: Static Code Analysis
+stages:
+- stage: PreBuild
+  displayName: PreBuild
+  jobs:
+  - job: PreBuild
+    steps:
+    - script: |
+          echo "Need to run sonarqube scan"
+      displayName: Static Code Analysis
 
-- script: |
-     echo "vulnerability scanning"
-  displayName: Vulnerability Scanning
+    - script: |
+        echo "vulnerability scanning"
+      displayName: Vulnerability Scanning
 
-- script: |
-    echo "Use Trivy to scan the file system to ensure passwords, tokens, certificates, etc are not present"
-  displayName: Secret Scan
+    - script: |
+        echo "Use Trivy to scan the file system to ensure passwords, tokens, certificates, etc are not present"
+      displayName: Secret Scan
 
-- script: |
-    echo "Run Dockerfile scanning"
-  displayName: Dockerfile Scan
+    - script: |
+        echo "Run Dockerfile scanning"
+      displayName: Dockerfile Scan
 
-- script: |
-    echo "K8 object (manifest or helm) security scanning"
-  displayName: K8 Object Scan
+    - script: |
+        echo "K8 object (manifest or helm) security scanning"
+      displayName: K8 Object Scan
 
-- script: |
-    echo "SBOM scan"
-  displayName: SBOM Scan / Report
+    - script: |
+        echo "SBOM scan"
+      displayName: SBOM Scan / Report

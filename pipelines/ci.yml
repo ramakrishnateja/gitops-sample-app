@@ -7,13 +7,10 @@ parameters:
 
 stages:
   - template: ./prebuild.yml
-    displayName: Prebuild
 
   - template: ./build.yml
-    displayName: Build
 
   - template: ./docker-build.yml
-    displayName: Docker Build
     parameters:
       RegistryServiceConnection: ${{ parameters.RegistryServiceConnection }}
       ImageName: ${{ parameters.ImageName }}
