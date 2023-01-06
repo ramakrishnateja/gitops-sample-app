@@ -23,7 +23,7 @@ steps:
     git config --global user.email ${{ parameters.GitUserEmail }}
     git config --global user.name "Azure Pipelines"
   displayName: Configure Git
-  workingDirectory: $(Pipeline.Workspace)/s/manifests
+  workingDirectory: $(Pipeline.Workspace)/s
 
 - script: |
     cd ${{ lower(parameters.Environment) }}
@@ -33,4 +33,4 @@ steps:
     git pull --rebase master
     git push -u origin +master
   displayName: Update Image
-  workingDirectory: $(Pipeline.Workspace)/s/manifests
+  workingDirectory: $(Pipeline.Workspace)/s
