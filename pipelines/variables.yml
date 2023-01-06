@@ -6,6 +6,6 @@ variables:
   - name: KustomizeImageName
     value: 'gitops-app-sample'
   - name: RegistryName
-    value: 'pulllogictejacontainerregistry'
+    value: 'pulllogictejacontainerregistry.azurecr.io'
   - name: RegistryServiceConnection
     value: 'pulllogictejacontainerregistry'

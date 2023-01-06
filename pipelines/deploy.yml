@@ -11,7 +11,7 @@ parameters:
   default:
     - name: Dev
       branchName: Dev
-      containerRegistryName: 'pulllogictejacontainerregistry'
+      containerRegistryName: 'pulllogictejacontainerregistry.azurecr.io'
       containerRegistryServiceConnectionName: 'pulllogictejacontainerregistry'
       gitopsEnvironmentPath: 'dev'
       previousStage: ''
