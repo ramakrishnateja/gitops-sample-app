@@ -28,26 +28,26 @@ stages:
       ${{ if ne(parameters.previousStage, '') }}:
         dependsOn: promote${{ lower(deploymentStage.name) }}
       jobs:
-        - ${{ if ne(parameters.previousStage, '') }}:
-          - deployment: Promote
-            environment: ${{ deploymentStage.devopsEnvironmentName }}
-            displayName: Promote
-            template: ./container-promote.yml
-            parameters:
+        - deployment: Promote
+          environment: ${{ deploymentStage.devopsEnvironmentName }}
+          displayName: Promote
+          steps:
+          - ${{ if ne(parameters.previousStage, '') }}:
+            - template: ./container-promote.yml
+              parameters:
               ToRegistryServiceConnection: ${{ deploymentStage.containerRegistryServiceConnectionName }}
               FromRegistryServiceConnection: ${{ deploymentStage.previousStageContainerRegistryServiceConnectionName }}
               FromRegistry: ${{ deploymentStage.previousStageContainerRegistryName }}
               ToRegistry: ${{ deploymentStage.containerRegistryName }}
               ImageName: ${{ parameters.ContainerImageName }}
 
-        - job: UpdateImage
-          displayName: Update Image
-          template: ./update-manifests.yml
-          parameters:
-            Environment: ${{ deploymentStage.gitopsEnvironmentPath }}
-            GitUserEmail: ${{ parameters.GitUserEmail }}
-            KustomizeImageName: ${{ parameters.KustomizeImageName }}
-            ContainerRegistryName: ${{ deploymentStage.containerRegistryName }}
-            ContainerImageName: ${{ parameters.ContainerImageName }}
+          - template: ./update-manifests.yml
+            parameters:
+              Environment: ${{ deploymentStage.gitopsEnvironmentPath }}
+              GitUserEmail: ${{ parameters.GitUserEmail }}
+              KustomizeImageName: ${{ parameters.KustomizeImageName }}
+              ContainerRegistryName: ${{ deploymentStage.containerRegistryName }}
+              ContainerImageName: ${{ parameters.ContainerImageName }}
+            
 
             
