@@ -4,6 +4,7 @@ resources:
     type: github
     endpoint: TejaGithub
     name: ramakrishnateja/gitops-sample-app-config
+    ref: master
 
 trigger:
   branches:
