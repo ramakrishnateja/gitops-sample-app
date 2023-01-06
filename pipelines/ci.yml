@@ -2,6 +2,9 @@ parameters:
   - name: RegistryServiceConnection
     type: string
 
+  - name: RegistryName
+    type: string
+
   - name: ImageName
     type: string
 
