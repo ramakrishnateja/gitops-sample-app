@@ -5,5 +5,7 @@ variables:
     value: azdevops@pulllogic.com
   - name: KustomizeImageName
     value: 'gitops-app-sample'
+  - name: RegistryName
+    value: 'pulllogictejacontainerregistry'
   - name: RegistryServiceConnection
     value: 'pulllogictejacontainerregistry'

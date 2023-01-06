@@ -13,4 +13,5 @@ stages:
   - template: ./docker-build.yml
     parameters:
       RegistryServiceConnection: ${{ parameters.RegistryServiceConnection }}
+      RegistryName: ${{ parameters.RegistryName }}
       ImageName: ${{ parameters.ImageName }}
