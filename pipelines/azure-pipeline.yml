@@ -3,7 +3,7 @@ resources:
   - repository: manifests
     type: github
     endpoint: TejaGithub
-    name: ramakrishnateja/gitops-sample-app
+    name: ramakrishnateja/gitops-sample-app-config
 
 trigger:
   branches:
