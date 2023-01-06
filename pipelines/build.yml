@@ -5,10 +5,10 @@ stages:
   jobs:
   - job: Build
     steps:
-      - step: |
+      - script: |
           echo "Unit testing"
         displayName: "Unit Testing"
 
-      - step: |
+      - script: |
           echo "Code Coverage"
         displayName: "Code Coverage"
