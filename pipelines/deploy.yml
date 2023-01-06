@@ -28,17 +28,17 @@ stages:
       ${{ if ne(parameters.previousStage, '') }}:
         dependsOn: promote${{ lower(deploymentStage.name) }}
       jobs:
-        ${{ if ne(parameters.previousStage, '') }}:
-        - deployment: Promote
-          environment: ${{ deploymentStage.devopsEnvironmentName }}
-          displayName: Promote
-          template: ./container-promote.yml
-          parameters:
-            ToRegistryServiceConnection: ${{ deploymentStage.containerRegistryServiceConnectionName }}
-            FromRegistryServiceConnection: ${{ deploymentStage.previousStageContainerRegistryServiceConnectionName }}
-            FromRegistry: ${{ deploymentStage.previousStageContainerRegistryName }}
-            ToRegistry: ${{ deploymentStage.containerRegistryName }}
-            ImageName: ${{ parameters.ContainerImageName }}
+        - ${{ if ne(parameters.previousStage, '') }}:
+          - deployment: Promote
+            environment: ${{ deploymentStage.devopsEnvironmentName }}
+            displayName: Promote
+            template: ./container-promote.yml
+            parameters:
+              ToRegistryServiceConnection: ${{ deploymentStage.containerRegistryServiceConnectionName }}
+              FromRegistryServiceConnection: ${{ deploymentStage.previousStageContainerRegistryServiceConnectionName }}
+              FromRegistry: ${{ deploymentStage.previousStageContainerRegistryName }}
+              ToRegistry: ${{ deploymentStage.containerRegistryName }}
+              ImageName: ${{ parameters.ContainerImageName }}
 
         - job: UpdateImage
           displayName: Update Image
