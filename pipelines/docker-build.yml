@@ -1,0 +1,43 @@
+parameters:
+  - name: RegistryServiceConnection
+    type: string
+  - name: ImageName
+    type: string
+steps:
+- checkout: self
+- bash: |
+    short_hash=`git rev-parse --short=7 HEAD`
+    echo "##vso[task.setVariable variable=short_hash]$short_hash"
+  displayName: Get Short git hash
+
+- task: Docker@2
+  displayName: Build Image from Dockerfile
+  inputs:
+    command: build
+    repository: ${{ parameters.ImageName }}
+    tags: |
+      $(Build.SourceVersion)
+
+- script: |
+      mkdir report
+      trivy image -s HIGH,CRITICAL ${{ parameters.ImageName }}:$(Build.SourceVersion) | tee ./report/trivy-image-scan-report.txt
+  displayName: "Image scan by Trivy"
+  continueOnError: true
+
+- publish: ./report
+  artifact: ImageScans
+  displayName: Publish Trivy Scan Results
+  condition: always()
+
+- script: |
+    echo "Upload container scan results"
+  displayName: Upload container scan results
+
+- task: Docker@2
+  displayName: Push container Image
+  inputs:
+    command: push
+    containerRegistry: ${{ parameters.RegistryServiceConnection }}
+    repository: ${{ parameters.ImageName }}
+    tags: |
+      $(Build.SourceVersion)

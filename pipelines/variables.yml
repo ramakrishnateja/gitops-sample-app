@@ -1,0 +1,9 @@
+variables:
+  - name: ApplicationName
+    value: 'gitops-app-sample'
+  - name: GitUserEmail
+    value: azdevops@pulllogic.com
+  - name: KustomizeImageName
+    value: 'gitops-app-sample'
+  - name: RegistryServiceConnection
+    value: 'pulllogictejacontainerregistry'

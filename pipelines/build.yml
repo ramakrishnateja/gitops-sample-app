@@ -1,0 +1,8 @@
+steps:
+  - step: |
+      echo "Unit testing"
+    displayName: "Unit Testing"
+
+  - step: |
+      echo "Code Coverage"
+    displayName: "Code Coverage"

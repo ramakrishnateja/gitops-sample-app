@@ -1,0 +1,28 @@
+resources:
+  repositories:
+  - repository: manifests
+    type: github
+    endpoint: TejaGithub
+    name: ramakrishnateja/gitops-sample-app
+
+trigger:
+  branches:
+    include:
+      - master
+
+variables:
+  - template: './variables.yml'
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+stages:
+  - template: ./ci.yml
+    parameters:
+      RegistryServiceConnection: $(RegistryServiceConnection)
+      ImageName: $(ApplicationName)
+  - template: ./deploy.yml
+    parameters:
+      GitUserEmail: $(GitUserEmail)
+      ApplicationName: $(ApplicationName)
+      KustomizeImageName: $(KustomizeImageName)

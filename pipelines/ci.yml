@@ -1,0 +1,22 @@
+parameters:
+  - name: RegistryServiceConnection
+    type: string
+
+  - name: ImageName
+    type: string
+
+stages:
+  - stage: Prebuild
+    displayName: Prebuild
+    template: ./prebuild.yml
+
+  - stage: Build
+    displayName: Build
+    template: ./build.yml
+
+  - stage: DockerBuild
+    displayName: Docker Build
+    template: ./docker-build.yml
+    parameters:
+      RegistryServiceConnection: ${{ parameters.RegistryServiceConnection }}
+      ImageName: ${{ parameters.ImageName }}

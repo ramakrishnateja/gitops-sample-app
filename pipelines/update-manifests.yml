@@ -1,0 +1,31 @@
+parameters:
+- name: Environment
+  type: string
+- name: GitUserEmail
+  type: string
+- name: KustomizeImageName
+  type: string
+- name: ContainerRegistryName
+  type: string
+- name: ContainerImageName
+  type: string
+
+
+steps:
+- checkout: manifests
+  persistCredentials: true
+- script: |
+    git config --global user.email ${{ parameters.GitUserEmail }}
+    git config --global user.name "Azure Pipelines"
+  displayName: Configure Git
+  workingDirectory: $(Pipeline.Workspace)/s/manifests
+
+- script: |
+    cd ${{ lower(parameters.Environment) }}
+    kustomize edit set image ${{ parameters.KustomizeImageName }}=${{ parameters.ContainerRegistryName }}/${{ parameters.ContainerImageName }}:$(Build.SourceVersion)
+    git add .
+    git commit -m "Gitops Image Change for ${{ parameters.Environment }} with ${{ parameters.ContainerRegistryName }}/${{ parameters.ContainerImageName }}:$(Build.SourceVersion)"
+    git pull --rebase master
+    git push -u origin +master
+  displayName: Update Image
+  workingDirectory: $(Pipeline.Workspace)/s/manifests
