@@ -31,23 +31,26 @@ stages:
         - deployment: Promote
           environment: ${{ deploymentStage.devopsEnvironmentName }}
           displayName: Promote
-          steps:
-          - ${{ if ne(parameters.previousStage, '') }}:
-            - template: ./container-promote.yml
-              parameters:
-              ToRegistryServiceConnection: ${{ deploymentStage.containerRegistryServiceConnectionName }}
-              FromRegistryServiceConnection: ${{ deploymentStage.previousStageContainerRegistryServiceConnectionName }}
-              FromRegistry: ${{ deploymentStage.previousStageContainerRegistryName }}
-              ToRegistry: ${{ deploymentStage.containerRegistryName }}
-              ImageName: ${{ parameters.ContainerImageName }}
+          strategy:
+            runOnce:
+              deploy:
+                steps:
+                - ${{ if ne(parameters.previousStage, '') }}:
+                  - template: ./container-promote.yml
+                    parameters:
+                    ToRegistryServiceConnection: ${{ deploymentStage.containerRegistryServiceConnectionName }}
+                    FromRegistryServiceConnection: ${{ deploymentStage.previousStageContainerRegistryServiceConnectionName }}
+                    FromRegistry: ${{ deploymentStage.previousStageContainerRegistryName }}
+                    ToRegistry: ${{ deploymentStage.containerRegistryName }}
+                    ImageName: ${{ parameters.ContainerImageName }}
 
-          - template: ./update-manifests.yml
-            parameters:
-              Environment: ${{ deploymentStage.gitopsEnvironmentPath }}
-              GitUserEmail: ${{ parameters.GitUserEmail }}
-              KustomizeImageName: ${{ parameters.KustomizeImageName }}
-              ContainerRegistryName: ${{ deploymentStage.containerRegistryName }}
-              ContainerImageName: ${{ parameters.ContainerImageName }}
+                - template: ./update-manifests.yml
+                  parameters:
+                    Environment: ${{ deploymentStage.gitopsEnvironmentPath }}
+                    GitUserEmail: ${{ parameters.GitUserEmail }}
+                    KustomizeImageName: ${{ parameters.KustomizeImageName }}
+                    ContainerRegistryName: ${{ deploymentStage.containerRegistryName }}
+                    ContainerImageName: ${{ parameters.ContainerImageName }}
             
 
             
