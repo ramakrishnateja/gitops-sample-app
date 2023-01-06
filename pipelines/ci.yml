@@ -6,17 +6,14 @@ parameters:
     type: string
 
 stages:
-  - stage: Prebuild
+  - template: ./prebuild.yml
     displayName: Prebuild
-    template: ./prebuild.yml
 
-  - stage: Build
+  - template: ./build.yml
     displayName: Build
-    template: ./build.yml
 
-  - stage: DockerBuild
+  - template: ./docker-build.yml
     displayName: Docker Build
-    template: ./docker-build.yml
     parameters:
       RegistryServiceConnection: ${{ parameters.RegistryServiceConnection }}
       ImageName: ${{ parameters.ImageName }}
