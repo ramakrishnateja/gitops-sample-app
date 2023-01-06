@@ -44,6 +44,7 @@ stages:
 
     - script: |
         docker tag ${{ parameters.ImageName }}:$(Build.SourceVersion) ${{ parameters.RegistryName }}/${{ parameters.ImageName }}:$(Build.SourceVersion)
+      displayName: Tag Image
 
     - task: Docker@2
       displayName: Push container Image

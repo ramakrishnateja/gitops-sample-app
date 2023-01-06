@@ -14,6 +14,11 @@ parameters:
 steps:
 - checkout: manifests
   persistCredentials: true
+
+- script: |
+    ls
+  workingDirectory: $(Pipeline.Workspace)/s
+  displayName: Debug
 - script: |
     git config --global user.email ${{ parameters.GitUserEmail }}
     git config --global user.name "Azure Pipelines"
