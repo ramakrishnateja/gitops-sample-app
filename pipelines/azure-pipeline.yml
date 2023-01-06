@@ -20,6 +20,7 @@ stages:
   - template: ./ci.yml
     parameters:
       RegistryServiceConnection: $(RegistryServiceConnection)
+      RegistryName: $(RegistryName)
       ImageName: $(ApplicationName)
   - template: ./deploy.yml
     parameters:
