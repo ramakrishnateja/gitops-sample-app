@@ -3,7 +3,7 @@ parameters:
   type: string
 - name: KustomizeImageName
   type: string
-- name: ContainerIamgeName
+- name: ContainerImageName
   type: string
   
 - name: Stages

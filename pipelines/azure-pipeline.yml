@@ -26,5 +26,5 @@ stages:
   - template: ./deploy.yml
     parameters:
       GitUserEmail: $(GitUserEmail)
-      ContainerIamgeName: $(ApplicationName)
+      ContainerImageName: $(ApplicationName)
       KustomizeImageName: $(KustomizeImageName)
