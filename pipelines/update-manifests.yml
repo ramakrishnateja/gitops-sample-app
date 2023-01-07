@@ -30,8 +30,8 @@ steps:
     git checkout -b master
     cd ${{ lower(parameters.Environment) }}
     kustomize edit set image ${{ parameters.KustomizeImageName }}=${{ parameters.ContainerRegistryName }}/${{ parameters.ContainerImageName }}:$(Build.SourceVersion)
-
-    git add .
+    cd ../
+    git add *
     git commit -m "Gitops Image Change for ${{ parameters.Environment }} with ${{ parameters.ContainerRegistryName }}/${{ parameters.ContainerImageName }}:$(Build.SourceVersion)"
     git pull --rebase master
     git push -u origin +master

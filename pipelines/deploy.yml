@@ -44,6 +44,10 @@ stages:
                     ToRegistry: ${{ deploymentStage.containerRegistryName }}
                     ImageName: ${{ parameters.ContainerImageName }}
 
+                - script: |
+                    echo ${{ parameters.ContainerImageName }}
+                  displayName: Debug
+
                 - template: ./update-manifests.yml
                   parameters:
                     Environment: ${{ deploymentStage.gitopsEnvironmentPath }}
