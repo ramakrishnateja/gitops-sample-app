@@ -32,6 +32,6 @@ steps:
     ls -a
     git add *
     git commit -m "Gitops Image Change for ${{ parameters.Environment }} with ${{ parameters.ContainerRegistryName }}/${{ parameters.ContainerImageName }}:$(Build.SourceVersion)"
-    git push -u origin
+    git push -u origin master
   displayName: Update Image
   workingDirectory: $(Pipeline.Workspace)/s
