@@ -16,8 +16,7 @@ steps:
   persistCredentials: true
 
 - script: |
-    echo ${{ parameters.ContainerImageName }}
-    ls
+    ls -a
   workingDirectory: $(Pipeline.Workspace)/s
   displayName: Debug
 - script: |
@@ -27,13 +26,12 @@ steps:
   workingDirectory: $(Pipeline.Workspace)/s
 
 - script: |
-    git checkout -b master
     cd ${{ lower(parameters.Environment) }}
     kustomize edit set image ${{ parameters.KustomizeImageName }}=${{ parameters.ContainerRegistryName }}/${{ parameters.ContainerImageName }}:$(Build.SourceVersion)
     cd ../
+    ls -a
     git add *
     git commit -m "Gitops Image Change for ${{ parameters.Environment }} with ${{ parameters.ContainerRegistryName }}/${{ parameters.ContainerImageName }}:$(Build.SourceVersion)"
-    git pull --rebase master
-    git push -u origin +master
+    git push -u origin
   displayName: Update Image
   workingDirectory: $(Pipeline.Workspace)/s
