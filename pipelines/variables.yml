@@ -9,3 +9,5 @@ variables:
     value: 'pulllogictejacontainerregistry.azurecr.io'
   - name: RegistryServiceConnection
     value: 'pulllogictejacontainerregistry'
+  - name: GitopsCICDConnectorServiceConnection
+    value: 'GitopsCICDConnector'

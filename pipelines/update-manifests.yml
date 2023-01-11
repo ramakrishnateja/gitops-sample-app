@@ -25,6 +25,25 @@ steps:
   displayName: Configure Git
   workingDirectory: $(Pipeline.Workspace)/s
 
+- task: qetza.replacetokens.replacetokens-task.replacetokens@3
+  inputs:
+    actionOnMissing: 'log warning'
+    rootDirectory: $(Pipeline.Workspace)/manifests/${{ lower(parameters.Environment) }}
+    targetFiles: |
+      **
+    tokenPrefix: '#{'
+    tokenSuffix: '}#'
+    keepToken: true
+    inlineVariables: |
+      PlanUrl: $(system.CollectionUri)
+      ProjectId: $(system.TeamProjectId)
+      HubName: $(system.HostType)
+      PlanId: $(system.PlanId)
+      JobId: $(system.JobId)
+      TimelineId: $(system.TimelineId)
+      TaskInstanceId: $(system.TaskInstanceId)
+  displayName: Enrich AzDevops Parameters
+
 - script: |
     cd ${{ lower(parameters.Environment) }}
     kustomize edit set image ${{ parameters.KustomizeImageName }}=${{ parameters.ContainerRegistryName }}/${{ parameters.ContainerImageName }}:$(Build.SourceVersion)
@@ -35,3 +54,10 @@ steps:
     git push origin HEAD:master
   displayName: Update Image
   workingDirectory: $(Pipeline.Workspace)/s
+
+- task: InvokeRESTAPI@1
+  inputs:
+    connectionType: 'connectedServiceName'
+    serviceConnection: '$(GitopsCICDConnectorServiceConnection)'
+    method: 'POST'
+    waitForCompletion: 'true'
