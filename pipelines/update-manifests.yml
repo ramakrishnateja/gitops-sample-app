@@ -28,7 +28,7 @@ steps:
 - task: qetza.replacetokens.replacetokens-task.replacetokens@3
   inputs:
     actionOnMissing: 'log warning'
-    rootDirectory: $(Pipeline.Workspace)/s/manifests/${{ lower(parameters.Environment) }}
+    rootDirectory: $(Pipeline.Workspace)/s/${{ lower(parameters.Environment) }}
     targetFiles: |
       **
     tokenPrefix: '#{'
