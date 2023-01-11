@@ -54,10 +54,3 @@ steps:
     git push origin HEAD:master
   displayName: Update Image
   workingDirectory: $(Pipeline.Workspace)/s
-
-- task: InvokeRESTAPI@1
-  inputs:
-    connectionType: 'connectedServiceName'
-    serviceConnection: '$(GitopsCICDConnectorServiceConnection)'
-    method: 'POST'
-    waitForCompletion: 'true'

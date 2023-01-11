@@ -51,6 +51,20 @@ stages:
                     KustomizeImageName: ${{ parameters.KustomizeImageName }}
                     ContainerRegistryName: ${{ deploymentStage.containerRegistryName }}
                     ContainerImageName: ${{ parameters.ContainerImageName }}
+
+        - job: GitopsDeploy
+          dependsOn: Promote
+          displayName: Wait for changes to be applied
+          pool: server
+          steps:
+          - task: InvokeRESTAPI@1
+            inputs:
+              connectionType: 'connectedServiceName'
+              serviceConnection: '$(GitopsCICDConnectorServiceConnection)'
+              method: 'POST'
+              waitForCompletion: 'true'
+              completionEvent: 'Callback'
+            
             
 
             
