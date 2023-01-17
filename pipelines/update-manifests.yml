@@ -52,6 +52,7 @@ steps:
     git add *
     echo "##vso[task.setvariable variable=GIT_STATUS]$(git status --porcelain | head -1)"
     git commit -m "Gitops Image Change for ${{ parameters.Environment }} with ${{ parameters.ContainerRegistryName }}/${{ parameters.ContainerImageName }}:$(Build.SourceVersion)"
+    git pull --rebase
     git push origin HEAD:deploy
   displayName: Update Image
   workingDirectory: $(Pipeline.Workspace)/s
