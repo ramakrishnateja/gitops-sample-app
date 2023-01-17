@@ -11,8 +11,6 @@ resources:
      name: ramakrishnateja/gitops-sample-app-config
      ref: deploy
 
-trigger:
-- main
 
 pool:
   vmImage: ubuntu-latest
