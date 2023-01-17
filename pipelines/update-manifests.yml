@@ -45,12 +45,11 @@ steps:
   displayName: Enrich AzDevops Parameters
 
 - script: |
-    git checkout -b deploy
+    git checkout deploy
     cd ${{ lower(parameters.Environment) }}
     kustomize edit set image ${{ parameters.KustomizeImageName }}=${{ parameters.ContainerRegistryName }}/${{ parameters.ContainerImageName }}:$(Build.SourceVersion)
     cd ../
     git add *
-    git branch --set-upstream-to=origin/deploy deploy
     echo "##vso[task.setvariable variable=GIT_STATUS]$(git status --porcelain | head -1)"
     git commit -m "Gitops Image Change for ${{ parameters.Environment }} with ${{ parameters.ContainerRegistryName }}/${{ parameters.ContainerImageName }}:$(Build.SourceVersion)"
     git pull
