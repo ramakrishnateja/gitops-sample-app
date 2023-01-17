@@ -11,3 +11,4 @@ variables:
     value: 'pulllogictejacontainerregistry'
   - name: GitopsCICDConnectorServiceConnection
     value: 'GitopsCICDConnector'
+  - group: RepositoryDetails

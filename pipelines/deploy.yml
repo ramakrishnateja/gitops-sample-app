@@ -5,6 +5,8 @@ parameters:
   type: string
 - name: ContainerImageName
   type: string
+- name: ApplicationName
+  type: string
   
 - name: Stages
   type: object
@@ -61,7 +63,19 @@ stages:
             inputs:
               connectionType: 'connectedServiceName'
               serviceConnection: '$(GitopsCICDConnectorServiceConnection)'
+              urlSuffix: 'azdo/createprandmerge'
               method: 'POST'
+              body: |
+                {
+                  "applicationKey": ${{ parameters.ApplicationName }},
+                  "title": "Merging PR $(PR_NUM) to master"
+                  "organizationName": "$(OrganizationName)",
+                  "repositoryType": "$(RepositoryType)",
+                  "repositoryName": "${{ parameters.ApplicationName }}-config",
+                  "targetBranch": "$(TargetBranch)",
+                  "sourceBranch": "$(SourceBranch)",
+                  "authToken": "$(AuthToken)"
+                }
               waitForCompletion: 'true'
               completionEvent: 'Callback'
             

@@ -28,3 +28,4 @@ stages:
       GitUserEmail: $(GitUserEmail)
       ContainerImageName: $(ApplicationName)
       KustomizeImageName: $(KustomizeImageName)
+      ApplicationName: $(ApplicationName)
