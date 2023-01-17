@@ -45,7 +45,6 @@ steps:
   displayName: Enrich AzDevops Parameters
 
 - script: |
-    git pull
     cd ${{ lower(parameters.Environment) }}
     kustomize edit set image ${{ parameters.KustomizeImageName }}=${{ parameters.ContainerRegistryName }}/${{ parameters.ContainerImageName }}:$(Build.SourceVersion)
     cd ../
