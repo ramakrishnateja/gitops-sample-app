@@ -68,7 +68,7 @@ stages:
               body: |
                 {
                   "applicationKey": "${{ parameters.ApplicationName }}-${{ lower(deploymentStage.name) }}",
-                  "title": "Merging PR $(PR_NUM) to master"
+                  "title": "Merging PR $(PR_NUM) to master",
                   "organizationName": "$(OrganizationName)",
                   "repositoryType": "$(RepositoryType)",
                   "repositoryName": "${{ parameters.ApplicationName }}-config",
