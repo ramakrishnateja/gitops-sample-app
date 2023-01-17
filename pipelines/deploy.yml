@@ -67,7 +67,7 @@ stages:
               method: 'POST'
               body: |
                 {
-                  "applicationKey": ${{ parameters.ApplicationName }},
+                  "applicationKey": "${{ parameters.ApplicationName }}-${{ lower(deploymentStage.name) }}",
                   "title": "Merging PR $(PR_NUM) to master"
                   "organizationName": "$(OrganizationName)",
                   "repositoryType": "$(RepositoryType)",
