@@ -1,6 +1,6 @@
 variables:
   - name: ApplicationName
-    value: 'gitops-app-sample'
+    value: 'gitops-sample-app'
   - name: GitUserEmail
     value: azdevops@pulllogic.com
   - name: KustomizeImageName
