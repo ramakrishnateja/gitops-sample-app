@@ -16,40 +16,36 @@ steps:
   persistCredentials: true
 
 - script: |
-    ls -a
-  workingDirectory: $(Pipeline.Workspace)/s
-  displayName: Debug
-- script: |
     git config --global user.email ${{ parameters.GitUserEmail }}
     git config --global user.name "Azure Pipelines"
   displayName: Configure Git
   workingDirectory: $(Pipeline.Workspace)/s
 
-- task: qetza.replacetokens.replacetokens-task.replacetokens@3
-  inputs:
-    actionOnMissing: 'log warning'
-    rootDirectory: $(Pipeline.Workspace)/s/${{ lower(parameters.Environment) }}
-    targetFiles: |
-      **
-    tokenPrefix: '#{'
-    tokenSuffix: '}#'
-    keepToken: true
-    inlineVariables: |
-      PlanUrl: $(system.CollectionUri)
-      ProjectId: $(system.TeamProjectId)
-      HubName: $(system.HostType)
-      PlanId: $(system.PlanId)
-      JobId: $(system.JobId)
-      TimelineId: $(system.TimelineId)
-      TaskInstanceId: $(system.TaskInstanceId)
-  displayName: Enrich AzDevops Parameters
+#- task: qetza.replacetokens.replacetokens-task.replacetokens@3
+#  inputs:
+#    actionOnMissing: 'log warning'
+#    rootDirectory: $(Pipeline.Workspace)/s/${{ lower(parameters.Environment) }}
+#    targetFiles: |
+#      **
+#    tokenPrefix: '#{'
+#    tokenSuffix: '}#'
+#    keepToken: true
+#    inlineVariables: |
+#      PlanUrl: $(system.CollectionUri)
+#      ProjectId: $(system.TeamProjectId)
+#      HubName: $(system.HostType)
+#      PlanId: $(system.PlanId)
+#      JobId: $(system.JobId)
+#      TimelineId: $(system.TimelineId)
+#      TaskInstanceId: $(system.TaskInstanceId)
+#  displayName: Enrich AzDevops Parameters
 
 - script: |
     git checkout -b deploy
     cd ${{ lower(parameters.Environment) }}
     kustomize edit set image ${{ parameters.KustomizeImageName }}=${{ parameters.ContainerRegistryName }}/${{ parameters.ContainerImageName }}:$(Build.SourceVersion)
     cd ../
-    git add *
+    git add .
     echo "##vso[task.setvariable variable=GIT_STATUS;]$(git status --porcelain | head -1)"
     git commit -m "Gitops Image Change for ${{ parameters.Environment }} with ${{ parameters.ContainerRegistryName }}/${{ parameters.ContainerImageName }}:$(Build.SourceVersion)"
     git push --set-upstream origin HEAD:deploy
