@@ -29,6 +29,7 @@ stages:
         dependsOn: DockerBuild
       ${{ if ne(parameters.previousStage, '') }}:
         dependsOn: promote${{ lower(deploymentStage.name) }}
+        condition: succeeded()
       jobs:
         - deployment: Promote
           environment: ${{ deploymentStage.devopsEnvironmentName }}
@@ -81,6 +82,11 @@ stages:
                 }
               waitForCompletion: 'true'
               completionEvent: 'Callback'
+
+        - job: Rollback
+          dependsOn: GitopsDeploy
+          condition: failed()
+          displayName: Rollback ${{ deploymentStage.Name }}
             
             
 
