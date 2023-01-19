@@ -87,6 +87,13 @@ stages:
           dependsOn: GitopsDeploy
           condition: failed()
           displayName: Rollback ${{ deploymentStage.Name }}
+          steps:
+          - checkout: manifests
+            persistCredentials: true
+          - script: |
+              git config --global user.email ${{ parameters.GitUserEmail }}
+              git config --global user.name "Azure Pipelines"
+              git revert HEAD:deploy
             
             
 
