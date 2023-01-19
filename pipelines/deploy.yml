@@ -93,7 +93,8 @@ stages:
           - script: |
               git config --global user.email ${{ parameters.GitUserEmail }}
               git config --global user.name "Azure Pipelines"
-              git revert HEAD:deploy
+              git revert HEAD
+            displayName: Revert
             
             
 
