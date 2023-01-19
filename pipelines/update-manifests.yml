@@ -34,17 +34,21 @@ steps:
 #      TaskInstanceId: $(system.TaskInstanceId)
 #  displayName: Enrich AzDevops Parameters
 
-- bash: |
-    git config --global user.email ${{ parameters.GitUserEmail }}
-    git config --global user.name "Azure Pipelines"
-    git checkout -b deploy
-    cd ${{ lower(parameters.Environment) }}
-    kustomize edit set image ${{ parameters.KustomizeImageName }}=${{ parameters.ContainerRegistryName }}/${{ parameters.ContainerImageName }}:$(Build.SourceVersion)
-    cd ../
-    git add .
-    echo "##vso[task.setvariable variable=GIT_STATUS]$(git status --porcelain | head -1)"
-    echo "Git Status is $(GIT_STATUS)"
-    git commit -m "Gitops Image Change for ${{ parameters.Environment }} with ${{ parameters.ContainerRegistryName }}/${{ parameters.ContainerImageName }}:$(Build.SourceVersion)"
-    git push --set-upstream origin HEAD:deploy
+- task: Bash@3
+  name: UpdateImage
+  inputs:
+    targetType: 'inline'
+    script: |
+      git config --global user.email ${{ parameters.GitUserEmail }}
+      git config --global user.name "Azure Pipelines"
+      git checkout -b deploy
+      cd ${{ lower(parameters.Environment) }}
+      kustomize edit set image ${{ parameters.KustomizeImageName }}=${{ parameters.ContainerRegistryName }}/${{ parameters.ContainerImageName }}:$(Build.SourceVersion)
+      cd ../
+      git add .
+      echo "##vso[task.setvariable variable=GIT_STATUS;isOutput=True]$(git status --porcelain | head -1)"
+      echo "Git Status is $(GIT_STATUS)"
+      git commit -m "Gitops Image Change for ${{ parameters.Environment }} with ${{ parameters.ContainerRegistryName }}/${{ parameters.ContainerImageName }}:$(Build.SourceVersion)"
+      git push --set-upstream origin HEAD:deploy
   displayName: Update Image
   workingDirectory: $(Pipeline.Workspace)/s
