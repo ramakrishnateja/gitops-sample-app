@@ -38,6 +38,7 @@ steps:
   name: UpdateImage
   inputs:
     targetType: 'inline'
+    workingDirectory: $(Pipeline.Workspace)/s
     script: |
       git config --global user.email ${{ parameters.GitUserEmail }}
       git config --global user.name "Azure Pipelines"
@@ -51,4 +52,4 @@ steps:
       git commit -m "Gitops Image Change for ${{ parameters.Environment }} with ${{ parameters.ContainerRegistryName }}/${{ parameters.ContainerImageName }}:$(Build.SourceVersion)"
       git push --set-upstream origin HEAD:deploy
   displayName: Update Image
-  workingDirectory: $(Pipeline.Workspace)/s
+  
