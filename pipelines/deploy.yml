@@ -56,6 +56,8 @@ stages:
 
         - job: GitopsDeploy
           dependsOn: Promote
+          variables:
+            GIT_STATUS: $[dependencies.Promote.outputs['setVariable.GIT_STATUS']]
           displayName: Wait for changes to be applied
           pool: server
           steps:
