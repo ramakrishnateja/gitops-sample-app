@@ -62,7 +62,7 @@ stages:
           pool: server
           steps:
           - task: InvokeRESTAPI@1
-            condition: ne(variables['GIT_STATUS'], '')
+            #condition: ne(variables['GIT_STATUS'], '')
             inputs:
               connectionType: 'connectedServiceName'
               serviceConnection: '$(GitopsCICDConnectorServiceConnection)'
