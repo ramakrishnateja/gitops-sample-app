@@ -43,6 +43,7 @@ steps:
     cd ../
     git add .
     echo "##vso[task.setvariable variable=GIT_STATUS;]$(git status --porcelain | head -1)"
+    echo "Git Statu is $(GIT_STATUS)"
     git commit -m "Gitops Image Change for ${{ parameters.Environment }} with ${{ parameters.ContainerRegistryName }}/${{ parameters.ContainerImageName }}:$(Build.SourceVersion)"
     git push --set-upstream origin HEAD:deploy
   displayName: Update Image
