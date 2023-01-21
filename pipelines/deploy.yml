@@ -89,11 +89,13 @@ stages:
           displayName: Rollback ${{ deploymentStage.Name }}
           steps:
           - checkout: manifests
+            clean: true
             persistCredentials: true
           - script: |
               git config --global user.email ${{ parameters.GitUserEmail }}
               git config --global user.name "Azure Pipelines"
-              git checkout deploy
+              git fetch --all
+              git switch deploy
               git revert HEAD
             displayName: Revert
             
