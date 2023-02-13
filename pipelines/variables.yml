@@ -2,13 +2,13 @@ variables:
   - name: ApplicationName
     value: 'gitops-sample-app'
   - name: GitUserEmail
-    value: azdevops@pulllogic.com
+    value: azdevops@gitops.com
   - name: KustomizeImageName
     value: 'gitops-app-sample'
   - name: RegistryName
-    value: 'pulllogictejacontainerregistry.azurecr.io'
+    value: 'tejagitopssample.azurecr.io'
   - name: RegistryServiceConnection
-    value: 'pulllogictejacontainerregistry'
+    value: 'TejaGitopsSampleACR'
   - name: GitopsCICDConnectorServiceConnection
     value: 'GitopsCICDConnector'
   - group: RepositoryDetails
